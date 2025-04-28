@@ -56,6 +56,7 @@
             display: flex;
             overflow: hidden;
             height: 100%;
+            flex-direction: row;
         }
 
         main {
@@ -213,6 +214,82 @@
         }
 
         /* === КОНЕЦ ДОБАВЛЕНИЯ === */
+
+        /* === Медиазапросы === */
+
+        /* Для экранов меньшей ширины */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 20px;
+            }
+
+            nav button {
+                font-size: 12px;
+                padding: 5px 10px;
+            }
+
+            .score-counter {
+                font-size: 14px;
+                padding: 10px 15px;
+            }
+
+            aside {
+                width: 100%;
+                padding: 10px;
+            }
+
+            .subject-list {
+                margin-top: 10px;
+            }
+
+            .chibi-container {
+                bottom: 10px;
+                left: 10px;
+            }
+
+            .chibi-image {
+                width: 150px;
+                height: 150px;
+            }
+
+            .content {
+                flex-direction: column;
+            }
+        }
+
+        /* Для очень маленьких экранов */
+        @media (max-width: 480px) {
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            main {
+                margin-bottom: 20px;
+            }
+
+            .score-counter {
+                font-size: 12px;
+            }
+
+            aside {
+                padding: 10px;
+            }
+
+            .subject-list {
+                margin-top: 5px;
+            }
+
+            .chibi-container {
+                bottom: 5px;
+                left: 5px;
+            }
+
+            .chibi-image {
+                width: 100px;
+                height: 100px;
+            }
+        }
     </style>
 </head>
 
