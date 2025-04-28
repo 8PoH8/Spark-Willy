@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Инструкция по сайту</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Orbitron', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #222222;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            overflow-x: hidden;
+        }
+
+        .instruction-container {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            max-width: 800px;
+            width: 90%;
+        }
+
+        h1 {
+            font-size: 40px;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+
+        ol {
+            text-align: left;
+            font-size: 20px;
+            line-height: 1.8;
+            margin: 0 auto;
+            max-width: 700px;
+        }
+
+        li {
+            margin-bottom: 15px;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 24px;
+            background-color: #7A4FFF;
+            color: white;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        a:hover {
+            background-color: #9C57FF;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="instruction-container">
+        <h1>Как пользоваться сайтом</h1>
+        <ol>
+            <li>На главной карте нажми на любую метку — откроется задание.</li>
+            <li>Внимательно прочитай условия и введи ответ в поле.</li>
+            <li>Если не получается — можешь воспользоваться подсказкой.</li>
+            <li>При правильном ответе ты получишь +1 к общему баллу!</li>
+            <li>Можно решать задания в любом порядке.</li>
+            <li>Следи за своим прогрессом — баллы сохраняются автоматически!</li>
+        </ol>
+        <a href="index.html">← На главную карту</a>
+    </div>
+</body>
+
+</html>

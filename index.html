@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Spark Willy</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background: #222222;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Orbitron', sans-serif;
+            color: #fff;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .small-header {
+            position: absolute;
+            top: 50px;
+            left: 40px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 25px;
+            color: #ffffff;
+            opacity: 0.8;
+        }
+
+        .small-header .cross-icon {
+            font-size: 50px;
+            color: #ffffff;
+            cursor: pointer;
+        }
+
+        .small-header .created-by {
+            font-size: 14px;
+        }
+
+        /* Заголовок страницы */
+        h1 {
+            font-size: 72px;
+            font-weight: bold;
+            text-align: center;
+            margin: 0;
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+
+        /* Подзаголовок */
+        .subtitle {
+            font-size: 24px;
+            font-weight: 300;
+            color: #ffffff;
+            margin-bottom: 30px;
+            text-align: center;
+            letter-spacing: 1px;
+            opacity: 0.7;
+        }
+
+        /* Кнопка */
+        .start-button {
+            background: #7A4FFF;
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 40px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .start-button:hover {
+            background: #9C57FF;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.6);
+            transform: scale(1.1);
+        }
+
+        /* Ромбики */
+        .object {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(45deg);
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .object:hover {
+            transform: scale(1.5) rotate(45deg);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.7);
+        }
+
+        /* Размеры ромбиков */
+        .object-small {
+            width: 50px;
+            height: 70px;
+        }
+
+        .object-medium {
+            width: 80px;
+            height: 120px;
+        }
+
+        .object-large {
+            width: 120px;
+            height: 180px;
+        }
+
+        /* Позиции ромбиков */
+        .object1 {
+            top: 10%;
+            left: 20%;
+        }
+
+        .object2 {
+            top: 20%;
+            left: 60%;
+        }
+
+        .object3 {
+            top: 50%;
+            left: 10%;
+        }
+
+        .object4 {
+            top: 70%;
+            left: 80%;
+        }
+
+        .object5 {
+            top: 30%;
+            left: 40%;
+        }
+
+        .object6 {
+            top: 50%;
+            right: 20%;
+        }
+
+        .object7 {
+            top: 80%;
+            left: 30%;
+        }
+
+        .object8 {
+            top: 90%;
+            left: 70%;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Маленькая шапка с крестиком и надписью -->
+    <div class="small-header">
+        <div class="cross-icon">✖</div>
+        <div class="created-by">Created by <br>Techno Demons</div>
+    </div>
+    <!-- Заголовок -->
+    <h1>Spark Willy</h1>
+
+    <!-- Подзаголовок -->
+    <div class="subtitle">study STEM subjects with WillY Spark</div>
+
+    <!-- Кнопка -->
+    <button class="start-button" onclick="goToFirst()">Start Shining Right Now!</button>
+
+    <!-- Ромбики -->
+    <div class="object object1 object-small"></div>
+    <div class="object object2 object-medium"></div>
+    <div class="object object3 object-small"></div>
+    <div class="object object4 object-large"></div>
+    <div class="object object5 object-medium"></div>
+    <div class="object object6 object-large"></div>
+    <div class="object object7 object-small"></div>
+    <div class="object object8 object-medium"></div>
+    <script>
+        function goToFirst() {
+            window.location.href = 'first.html'; // Переход на страницу first.html
+        }
+    </script>
+</body>
+
+</html>

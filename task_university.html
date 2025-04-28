@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Задача: Университет</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Orbitron', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background: #222222;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow-x: hidden;
+        }
+
+        .task-container {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            max-width: 600px;
+            width: 90%;
+        }
+
+        h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+
+        .panorama-img {
+            width: 100%;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+        }
+
+        p {
+            font-size: 18px;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        input[type="text"] {
+            padding: 12px;
+            width: 250px;
+            border-radius: 30px;
+            border: none;
+            outline: none;
+            margin-top: 10px;
+            font-size: 18px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            text-align: center;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 15px 30px;
+            background-color: #7A4FFF;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #9C57FF;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.6);
+            transform: scale(1.05);
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 30px;
+            color: #7A4FFF;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: #9C57FF;
+        }
+
+        #result {
+            font-size: 20px;
+            margin-top: 15px;
+        }
+
+        #hintText {
+            margin-top: 10px;
+            font-style: italic;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="task-container">
+        <h2>Университет Костаная</h2>
+
+        <img src="images/university.jpg" alt="Университет" class="panorama-img" />
+
+        <p>Перед главным корпусом университета стоит скульптура высотой 3 метра. В солнечный день её тень оказалась
+            длиной 4 метра. Какова высота самого университета, если его тень в тот же момент составляет 20 метров?</p>
+
+        <input type="text" id="answer" placeholder="Ответ в метрах">
+        <br>
+        <button onclick="checkAnswer()">Проверить</button>
+        <p id="result"></p>
+        <button id="hintButton" style="display: none;" onclick="showHint()">Показать подсказку</button>
+        <p id="hintText" style="display: none;">Подсказка: Тень и высота пропорциональны. Составь пропорцию.</p>
+
+        <div id="scoreDisplay" style="margin-top: 20px;"></div>
+
+        <a href="index.html">← Назад к карте</a>
+    </div>
+
+    <script>
+        let firstAttempt = true;
+        let correctAnswer = 15;
+
+        function checkAnswer() {
+            const userAnswer = parseFloat(document.getElementById("answer").value);
+            const result = document.getElementById("result");
+            const hintButton = document.getElementById("hintButton");
+
+            if (Math.abs(userAnswer - correctAnswer) <= 0.2) {
+                result.textContent = "✅ Верно! Молодец!";
+                result.style.color = "lime";
+
+                let score = parseInt(localStorage.getItem('score')) || 0;
+                score += 1;
+                localStorage.setItem('score', score);
+
+                document.getElementById('scoreDisplay').innerHTML = `Решено задач: <b>${score}</b>`;
+
+                // Скрываем точку, если она есть
+                if (document.querySelector('.point-university')) {
+                    document.querySelector('.point-university').style.display = "none";
+                }
+
+                localStorage.setItem('task_university_done', 'true');
+
+            } else {
+                result.textContent = "❌ Неправильно. Попробуй ещё раз.";
+                result.style.color = "red";
+
+                if (firstAttempt) {
+                    hintButton.style.display = "inline-block";
+                    firstAttempt = false;
+                }
+            }
+        }
+
+        function showHint() {
+            document.getElementById("hintText").style.display = "block";
+            document.getElementById("hintButton").style.display = "none";
+        }
+
+        window.onload = function () {
+            const score = localStorage.getItem('score') || 0;
+            document.getElementById('scoreDisplay').innerHTML = `Решено задач: <b>${score}</b>`;
+        };
+    </script>
+</body>
+
+</html>

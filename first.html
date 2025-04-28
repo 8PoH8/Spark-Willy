@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Интерактивная карта Костаная</title>
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Orbitron', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #222222;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        header {
+            background-color: #222222;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        nav button {
+            margin-left: 10px;
+            padding: 8px 15px;
+            background-color: #7A4FFF;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        nav button:hover {
+            background-color: #9C57FF;
+        }
+
+        .content {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+            height: 100%;
+        }
+
+        main {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+            border-radius: 0;
+        }
+
+        .score-counter {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 18px;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+            z-index: 10;
+            opacity: 0;
+            animation: fadeIn 0.6s forwards;
+            color: #222222;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        aside {
+            width: 260px;
+            background-color: #333;
+            border-left: 2px solid #444;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            padding: 20px;
+        }
+
+        .subject-list {
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        .subject {
+            margin-bottom: 15px;
+        }
+
+        .subject>button {
+            width: 100%;
+            background-color: #7A4FFF;
+            color: white;
+            border: none;
+            padding: 10px;
+            text-align: left;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .subject>button:hover {
+            background-color: #9C57FF;
+        }
+
+        .topics {
+            margin-top: 5px;
+            padding-left: 10px;
+            display: none;
+            flex-direction: column;
+        }
+
+        .topics a {
+            text-decoration: none;
+            color: #fff;
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        .topics a:hover {
+            color: #9C57FF;
+        }
+
+        .support {
+            background-color: #444;
+            padding: 15px;
+            text-align: center;
+            border-top: 1px solid #555;
+        }
+
+        .support a {
+            text-decoration: none;
+            color: #7A4FFF;
+            font-weight: bold;
+        }
+
+        .support a:hover {
+            text-decoration: underline;
+        }
+
+        /* === ДОБАВЛЕНО ДЛЯ ЧИБИКА === */
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-5px);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        .chibi-container {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 8px 12px;
+            border-radius: 10px;
+            z-index: 15;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .chibi-image {
+            width: 250px;
+            height: 250px;
+            object-fit: cover;
+            margin-right: 10px;
+            border-radius: 50%;
+        }
+
+        .chibi-text {
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        /* === КОНЕЦ ДОБАВЛЕНИЯ === */
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1><a href="index.html" style="color: white; text-decoration: none;">Spark Willy</a></h1>
+        <nav>
+            <button onclick="resetGame()">Начать заново</button>
+            <button onclick="goToInstruction()">Инструкция</button>
+        </nav>
+    </header>
+
+    <div class="content">
+        <main>
+            <div class="score-counter">
+                Решено задач: <span id="scoreDisplay">0</span>
+            </div>
+
+            <div id="map"></div>
+
+            <!-- ДОБАВЛЕН ЧИБИК -->
+            <div class="chibi-container">
+                <img src="images/chibi.png" alt="Chibi" class="chibi-image">
+            </div>
+            <!-- КОНЕЦ ДОБАВЛЕНИЯ -->
+        </main>
+
+        <aside>
+            <div class="subject-list">
+                <div class="subject">
+                    <button onclick="toggleTopics(this)">Физика</button>
+                    <div class="topics">
+                        <a href="physics_mechanics.html">Механика</a>
+                        <a href="physics_optics.html">Оптика</a>
+                        <a href="physics_electricity.html">Электричество</a>
+                    </div>
+                </div>
+
+                <div class="subject">
+                    <button onclick="toggleTopics(this)">Математика</button>
+                    <div class="topics">
+                        <a href="math_algebra.html">Алгебра</a>
+                        <a href="math_geometry.html">Геометрия</a>
+                        <a href="math_trigonometry.html">Тригонометрия</a>
+                    </div>
+                </div>
+
+                <div class="subject">
+                    <button onclick="toggleTopics(this)">Химия</button>
+                    <div class="topics">
+                        <a href="chemistry_inorganic.html">Неорганическая химия</a>
+                        <a href="chemistry_organic.html">Органическая химия</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="support">
+                <a href="https://t.me/Help2132_bot" target="_blank">Техподдержка</a>
+            </div>
+        </aside>
+    </div>
+
+    <script>
+        ymaps.ready(init);
+
+        function init() {
+            const map = new ymaps.Map("map", {
+                center: [53.2144, 63.6246],
+                zoom: 14
+            });
+
+            const squarePlacemark = new ymaps.Placemark([53.212439, 63.637590], {
+                hintContent: 'Солнечные часы',
+                balloonContent: 'Нажми, чтобы решить задачу!'
+            });
+            squarePlacemark.events.add('click', function () {
+                goToTask('square');
+            });
+
+            const universityPlacemark = new ymaps.Placemark([53.213733, 63.628846], {
+                hintContent: 'Университет',
+                balloonContent: 'Нажми, чтобы решить задачу!'
+            });
+            universityPlacemark.events.add('click', function () {
+                goToTask('university');
+            });
+
+            const embankmentPlacemark = new ymaps.Placemark([53.205888, 63.647999], {
+                hintContent: 'Набережная',
+                balloonContent: 'Нажми, чтобы решить задачу!'
+            });
+            embankmentPlacemark.events.add('click', function () {
+                goToTask('embankment');
+            });
+
+            const registryOfficePlacemark = new ymaps.Placemark([53.242595, 63.684292], {
+                hintContent: 'ЗАГС',
+                balloonContent: 'Нажми, чтобы решить задачу!'
+            });
+            registryOfficePlacemark.events.add('click', function () {
+                goToTask('registry_office');
+            });
+
+            const roadPlacemark = new ymaps.Placemark([53.208445, 63.648269], {
+                hintContent: 'Дорога',
+                balloonContent: 'Нажми, чтобы решить задачу!'
+            });
+            roadPlacemark.events.add('click', function () {
+                goToTask('road');
+            });
+
+            if (localStorage.getItem('task_square_done') !== "true") {
+                map.geoObjects.add(squarePlacemark);
+            }
+            if (localStorage.getItem('task_university_done') !== "true") {
+                map.geoObjects.add(universityPlacemark);
+            }
+            if (localStorage.getItem('task_embankment_done') !== "true") {
+                map.geoObjects.add(embankmentPlacemark);
+            }
+            if (localStorage.getItem('task_registry_office_done') !== "true") {
+                map.geoObjects.add(registryOfficePlacemark);
+            }
+            if (localStorage.getItem('task_road_done') !== "true") {
+                map.geoObjects.add(roadPlacemark);
+            }
+        }
+
+        function goToTask(place) {
+            window.location.href = `task_${place}.html`;
+        }
+
+        function resetGame() {
+            localStorage.clear();
+            location.reload();
+        }
+
+        function goToInstruction() {
+            window.location.href = 'instruction.html';
+        }
+
+        function toggleTopics(button) {
+            const topics = button.nextElementSibling;
+            topics.style.display = topics.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        window.onload = function () {
+            const score = localStorage.getItem('score') || 0;
+            document.getElementById('scoreDisplay').textContent = score;
+        };
+    </script>
+
+</body>
+
+</html>

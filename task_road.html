@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Задача: Дорога</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Orbitron', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background: #222222;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow-x: hidden;
+        }
+
+        .task-container {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            max-width: 600px;
+            width: 90%;
+        }
+
+        h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+
+        .panorama-img {
+            width: 100%;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+        }
+
+        p {
+            font-size: 18px;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        input[type="text"],
+        button,
+        a {
+            padding: 12px;
+            border-radius: 30px;
+            border: none;
+            outline: none;
+            font-size: 18px;
+        }
+
+        input[type="text"] {
+            width: 250px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            text-align: center;
+        }
+
+        button {
+            margin-top: 20px;
+            background-color: #7A4FFF;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #9C57FF;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.6);
+            transform: scale(1.05);
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 30px;
+            color: #7A4FFF;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: #9C57FF;
+        }
+
+        #result {
+            font-size: 20px;
+            margin-top: 15px;
+        }
+
+        #hintText {
+            margin-top: 10px;
+            font-style: italic;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="task-container">
+        <h2>Проектирование дороги</h2>
+        <img src="images/road.jpg" alt="Дорога" class="panorama-img" />
+        <p>При проектировании дороги использовали GPS-координаты. Одна точка: (53.2140, 63.6246), вторая: (53.2145,
+            63.6256). Какой тип данных лучше использовать для хранения таких координат в программе?</p>
+        <input type="text" id="answer" placeholder="Ответ на английском">
+        <br>
+        <button onclick="checkAnswer()">Проверить</button>
+        <p id="result"></p>
+        <button id="hintButton" style="display: none;" onclick="showHint()">Показать подсказку</button>
+        <p id="hintText" style="display: none;">Подсказка: нужны дробные числа с высокой точностью.</p>
+        <div id="scoreDisplay" style="margin-top: 20px;"></div>
+        <a href="index.html">← Назад к карте</a>
+    </div>
+
+    <script>
+        let hintUsed = false;
+        function checkAnswer() {
+            const userAnswer = document.getElementById("answer").value.trim().toLowerCase();
+            const result = document.getElementById("result");
+            const hintButton = document.getElementById("hintButton");
+
+            if (userAnswer.includes("double")) {
+                result.textContent = "✅ Верно! Молодец!";
+                result.style.color = "lime";
+                localStorage.setItem('task_road_done', 'true');
+                let score = parseInt(localStorage.getItem('score')) || 0;
+                score += 1;
+                localStorage.setItem('score', score);
+                document.getElementById('scoreDisplay').innerHTML = `Решено задач: <b>${score}</b>`;
+            } else {
+                result.textContent = "❌ Неправильно. Попробуй ещё раз.";
+                result.style.color = "red";
+                hintButton.style.display = "inline-block";
+            }
+        }
+        function showHint() {
+            document.getElementById("hintText").style.display = "block";
+            hintUsed = true;
+        }
+        window.onload = function () {
+            const score = localStorage.getItem('score') || 0;
+            document.getElementById('scoreDisplay').innerHTML = `Решено задач: <b>${score}</b>`;
+        };
+    </script>
+</body>
+
+</html>
